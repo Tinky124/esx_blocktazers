@@ -15,7 +15,7 @@ AddEventHandler('weaponDamageEvent', function(sender, data)
         local senderName = GetPlayerName(sender)
         if senderName ~= nil then
             if data.damageType ~= 0 then
-                if data.weaponDamage == 1 or data.weaponDamage == 0 then
+                if data.weaponDamage == 1 then
                     local xPlayer = ESX.GetPlayerFromId(sender)
                     if xPlayer ~= nil then
                         local job, jobName = xPlayer.job, xPlayer.job.name
