@@ -6,3 +6,5 @@ description 'Simple & optimized ESX resource that will stop modders from tazing 
 version '1.0.0'
 
 server_script 'server.lua'
+
+server_only 'yes'
