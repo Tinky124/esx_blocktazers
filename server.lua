@@ -25,7 +25,7 @@ AddEventHandler('weaponDamageEvent', function(sender, data)
                 if not allowed then 
                     CancelEvent()
                     print('^1'..src_name..'^0 (ID: ^1'..src..'^0) has just been kicked for an unauthorized taze against another player!')
-                    DropPlayer(src, kickMessage)
+                    DropPlayer(src, kick_message)
                 end
             end
         end
