@@ -1,31 +1,15 @@
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-local whitelisted_jobs = {'police', 'offpolice'}
-
-local kick_message = 'Unauthorized Taze Detected!'
-
-AddEventHandler('weaponDamageEvent', function(sender, data)
-    local src = sender
-    local src_name = GetPlayerName(src)
-    if src_name ~= nil then
-        if data.weaponType == 911657153 then --'WEAPON_STUNGUN'
-            local xPlayer = ESX.GetPlayerFromId(src)
-            if xPlayer ~= nil and xPlayer.job ~= nil then
-                local allowed = false
-
-                for k, v in pairs(whitelisted_jobs) do
-                    if xPlayer.job.name == v then 
-                        allowed = true
-                        break
-                    end
-                end
-
-                if not allowed then 
+local AntiTazePlayers = true
+local DistanceMaxTaze = 20 -- max distance taze... nemojte dirati!
+AddEventHandler("weaponDamageEvent", function(sender, data)
+    if AntiTazePlayers then
+        local _src = sender
+        local osobaaa = NetworkGetEntityFromNetworkId(data.hitGlobalId)
+        if DoesEntityExist(osobaaa) and IsPedAPlayer(osobaaa) then
+            local udaljenostigraca = #(GetEntityCoords(GetPlayerPed(_src)) - GetEntityCoords(osobaaa))
+            if _src and data.weaponType == 911657153 or data.weaponType == `WEAPON_STUNGUN` then
+                if udaljenostigraca >= DistanceMaxTaze then
                     CancelEvent()
-                    print('^1'..src_name..'^0 (ID: ^1'..src..'^0) has just been kicked for an unauthorized taze against another player!')
-                    DropPlayer(src, kick_message)
+                    DropPlayer(_src, "Pokusaj da taze uradis preko cheata! Uhvatio te Tinky :)")
                 end
             end
         end
